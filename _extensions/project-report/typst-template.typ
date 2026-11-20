@@ -1,11 +1,11 @@
 // PROJECT PLANNER · Quarto + Typst
 // All style/layout changes live here; edit blank.qmd or filled.qmd for content.
-// Version 2: larger type, flush-left title, vertically centered table cells,
-// real bullet lists, and no empty bullets or ruled Notes lines.
+// Version 4: content-sized scope panels and page-filling empty notes.
+// No fixed-height cards that clip list items or waste a page.
 
 // ── THEME: change these values to restyle every report ────────────────
 #let font-family = ("Libertinus Sans", "Liberation Sans", "Arial")
-#let body-size = 11pt            // formerly 8.6pt
+#let body-size = 10.2pt            // formerly 8.6pt
 #let heading-size = 11.5pt
 #let title-size = 20pt
 #let ink = rgb("#263442")
@@ -124,25 +124,39 @@
   )
 }
 
-// Only data provided in the YAML is listed. Empty lists are truly empty.
-// `list` is Typst's own bullet-list function, not a manually drawn glyph.
-#let list-panel(title, values) = block(
-  width: 100%, height: 1.54in,
+// DETAILS PANELS
+// Grid cells size to the *tallest actual list* in their row. Unlike the v3
+// fixed-height blocks (1.54in), they can never hide extra bullet points.
+// The cell itself owns the border so paired panels end at the same height.
+// A blank panel retains some space for handwriting without a rigid height.
+#let list-panel(title, values) = grid.cell(
   stroke: 0.7pt + line-color,
   inset: (x: 10pt, y: 8pt),
+  breakable: true,
 )[
   #text(weight: "bold", fill: navy, size: heading-size)[#title]
   #if values.len() > 0 [
     #v(6pt)
     #list(tight: true, indent: 11pt, body-indent: 6pt,
       spacing: 3.2pt, ..values)
+  ] else [
+    // Optional handwriting space for a truly empty list. When paired with
+    // a populated list, the populated list determines the overall row height.
+    #v(0.80in)
   ]
 ]
 
-// Notes: open blank space for handwritten notes when YAML `notes: []`;
-// populated notes appear as bullet points without horizontal ruling.
+// NOTES
+// A fixed 5.54in box was the cause of the blank third page. When there are
+// notes, use the natural content height; additional bullets can paginate.
+// When there are NO notes, 1fr fills only the space *remaining* on this page.
+// The empty Notes box therefore cannot manufacture a page of blank padding.
 #let notes-panel(values) = block(
-  width: 100%, height: 5.54in,
+  width: 100%,
+  height: if values.len() == 0 { 1fr } else { auto },
+  breakable: true,
+  above: 0pt,
+  below: 0pt,
   stroke: 0.7pt + line-color,
   inset: (x: 12pt, y: 9pt),
 )[
@@ -192,14 +206,34 @@
   v(11pt)
   tasks-table(tasks)
 
-  // PAGE 2
-  pagebreak()
+  // DETAILS (normally page 2)
+  // IMPORTANT: Do not put an unconditional pagebreak() here. If a long table
+  // already ran onto page 2, that would waste the rest of page 2 and push
+  // In scope / Out of scope / Notes onto page 3.
+  //
+  // A marker records the page on which the last table actually ended.
+  // Querying that independent marker avoids a self-referential page counter
+  // decision, which can otherwise make Typst pagination unstable.
+  [#metadata(none)<planner-tables-finished>]
+  context {
+    let last-table-page = query(<planner-tables-finished>).first().location().page()
+    if last-table-page == 1 {
+      // Normal planner: details start on page 2.
+      pagebreak(weak: true)
+    } else {
+      // Expanded planner: use remaining space on the current page.
+      v(11pt)
+    }
+  }
+
   grid(columns: (1fr, 1fr), gutter: 11pt,
+    rows: (auto,),
     list-panel("In scope", in-scope),
     list-panel("Out of scope", out-of-scope),
   )
   v(11pt)
   grid(columns: (1fr, 1fr), gutter: 11pt,
+    rows: (auto,),
     list-panel("Success criteria", success-criteria),
     list-panel("Deliverables", deliverables),
   )
@@ -213,3 +247,4 @@
     doc
   }
 }
+
