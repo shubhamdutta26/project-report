@@ -1,68 +1,63 @@
 ---
-title: "Antibody Engineering Project Planner"
+title: "Project Planner"
 format:
   project-report-typst: default
 planner:
-  project: "BACE1 x TfR1 Bispecific"
-  team-lead: "Research Team"
-  objective: "Produce 2 mg of a purified BACE1 x TfR1 bispecific"
-  due-date: "Jan 30, 2027"
+  project: "BACE1 x TfR1 Bispecific Duobody"
+  team-lead: "Shubham Dutta"
+  objective: "Produce 10 μg (?) of a purified BACE1 x TfR1 duobody"
+  due-date: "March 31, 2027"
 
   # Progress is 0–100, displayed as four shaded 25% blocks.
   milestones:
-    - {name: "Format / construct design", progress: 100, due: "Wk 2", done: true}
-    - {name: "Cloning and sequence QC", progress: 100, due: "Wk 4", done: true}
-    - {name: "Small-scale expression", progress: 75, due: "Wk 7", done: false}
-    - {name: "Purification and SEC", progress: 25, due: "Wk 10", done: false}
-    - {name: "Binding / developability QC", progress: 0, due: "Wk 12", done: false}
+    - {name: "aBACE1 & aTfR1 construct design", progress: 100, due: " ", done: true}
+    - {name: "aBACE1 development, QC, formulation", progress: 100, due: " ", done: true}
+    - {name: "aTfR1 development, QC, formulation", progress: 75, due: "2026-12-04", done: false}
+    - {name: "Optimize cFAE Arm Exchange conditions", progress: 0, due: "2026-12-30", done: false}
+    - {name: "cFAE validation & duobody QC", progress: 0, due: "2026-02-28", done: false}
 
   # Timeline uses inclusive week numbers from 1 to 12.
   timeline:
-    - {segment: "Design and cloning", start: 1, end: 4}
-    - {segment: "Sequence verification", start: 3, end: 5}
-    - {segment: "Expression", start: 5, end: 8}
-    - {segment: "Purification", start: 8, end: 10}
-    - {segment: "QC and final review", start: 10, end: 12}
+    - {segment: "aBACE1 & aTfR1 construct design", start: 0, end: 0}
+    - {segment: "aBACE1 development, QC, formulation", start: 0, end: 0}
+    - {segment: "aTfR1 development, QC, formulation", start: 1, end: 4}
+    - {segment: "Optimize cFAE Arm Exchange conditions", start: 5, end: 9}
+    - {segment: "cFAE validation & duobody QC", start: 10, end: 12}
 
   tasks:
-    - {task: "Select antibody format", owner: "Design", start: "Wk 1", end: "Wk 2", done: true}
-    - {task: "Order DNA constructs", owner: "Design", start: "Wk 2", end: "Wk 3", done: true}
-    - {task: "Verify clone sequences", owner: "Cloning", start: "Wk 3", end: "Wk 4", done: true}
-    - {task: "Transfect CHO cells", owner: "Upstream", start: "Wk 5", end: "Wk 6", done: false}
-    - {task: "Protein A / SEC cleanup", owner: "Downstream", start: "Wk 8", end: "Wk 10", done: false}
-    - {task: "Affinity and purity assays", owner: "Analytics", start: "Wk 10", end: "Wk 11", done: false}
-    - {task: "Final data package", owner: "Team", start: "Wk 12", end: "Wk 12", done: false}
+    - {task: "aTfR [BF08] L12E-V101R ELISA", owner: "Shubham", start: "Wk 1", end: "Wk 1", done: false}
+    - {task: "Order aBACE and aTfR duobody sequences", owner: "Shubham", start: "Wk 2", end: "Wk 2", done: false}
+    - {task: "BACE and aTfR mAb expression", owner: "Shubham", start: "Wk 3", end: "Wk 4", done: false}
+    - {task: "Purification & buffer exchange", owner: "Shubham", start: "Wk 5", end: "Wk 6", done: false}
+    - {task: "Optimize cFab Arm Exchange", owner: "Shubham", start: "Wk 6", end: "Wk 8", done: false}
+    - {task: "Run final cFAE; Validate using MS", owner: "Shubham", start: "Wk 9", end: "Wk 11", done: false}
+    - {task: "Duobody ELISA", owner: "Shubham", start: "Wk 12", end: "Wk 12", done: false}
 
   in-scope:
-    - "Bispecific format design"
-    - "Transient expression"
-    - "Affinity-based purification"
-    - "Analytical SEC and binding QC"
-    - "Final yield assessment"
+    - "Optimize cFAE"
+    - "400 - 600 mL expression of each antibody"
+    - "Run cFAE"
+    - "Validate using MS"
+    - "Duobody ELISA"
+    - "Deliver 10 μg duobody"
 
   out-of-scope:
+    - "Bispecific format design"
     - "Animal efficacy studies"
-    - "GMP manufacture"
+    - "GMP manufacturing"
     - "Long-term stability studies"
     - "Clinical formulation"
 
   success-criteria:
-    - "At least 2 mg recovered"
-    - "Monomer fraction assessed"
-    - "Binding confirmed to both targets"
-    - "QC data documented"
+    - "At least 10 μg (?) duobody"
+    - "Duobody binds to both targets"
+    - "Mass Spectroscopy masses match"
 
   deliverables:
-    - "Expression / purification summary"
-    - "Final purified protein"
-    - "Analytical SEC profile"
-    - "Binding and QC report"
-    - "Construct records"
+    - "At least 10 μg (?) duobody"
 
   notes:
-    - "Review expression yield after the first small-scale run."
-    - "Track aggregate content before and after purification."
-    - "Compare construct performance using the same assay settings."
+    - " "
 
   include-appendix: false
 ---
